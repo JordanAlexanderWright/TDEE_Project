@@ -26,24 +26,30 @@ class Window(Tk):
         # This is creating a stringvariable object that allows you to manipulate information from a textbox
 
         self.month_label = ttk.Label(self, text="Enter The Desired Month")
-        self.month_label.grid(column=0, row=0)
-
-        self.year_label = ttk.Label(self, text="Enter The Desired Year")
-        self.year_label.grid(column=0, row=10)
+        self.month_label.grid(column=1, row=1, sticky="n")
 
         self.monthbox = ttk.Entry(self, width=20, textvariable=self.month)
         # This will set the cursor already set on the textbox when the application is run
         self.monthbox.focus()
-        self.monthbox.grid(column=0, row=1)
-
-        self.yearbox = ttk.Entry(self, width=20, textvariable=self.year)
-        self.yearbox.grid(column=0, row=11)
+        self.monthbox.grid(column=1, row=2, sticky="n")
 
         self.month_button = ttk.Button(self, text="Submit", command=self.month_click)
-        self.month_button.grid(column=0, row=3)
+        self.month_button.grid(column=1, row=3, sticky="n", pady=(0, 30))
+
+        self.year_label = ttk.Label(self, text="Enter The Desired Year")
+        self.year_label.grid(column=1, row=4, sticky="n")
+
+        self.yearbox = ttk.Entry(self, width=20, textvariable=self.year)
+        self.yearbox.grid(column=1, row=5, sticky="n")
 
         self.year_button = ttk.Button(self, text="Submit", command=self.year_click)
-        self.year_button.grid(column=0, row=12)
+        self.year_button.grid(column=1, row=6, sticky="n")
+
+        self.columnconfigure(1, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(7, weight=1)
+
+        # This shit is fucky -- have to mess with it. I set weight to the invisible rows/colums to take up extra space.
 
     def month_click(self):
         month = self.month.get()

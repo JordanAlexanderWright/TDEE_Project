@@ -23,8 +23,6 @@ class Window(Tk):
         month_label = ttk.Label(master=self, text=month, style='Month.TLabel')
         month_label.grid(column=3, row=0, pady=(0,40))
 
-        october = calendar.monthrange(2021, 10)
-
         days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         column_count = 0
 
