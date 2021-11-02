@@ -5,6 +5,8 @@ from datetime import date
 
 class CalWindow(Tk):
 
+    # I believe that when I am importing this it is still making another master frame. Need to work on that.
+
     def __init__(self, frame=NONE):
         super().__init__()
 
@@ -19,6 +21,7 @@ class CalWindow(Tk):
         self.today = date.today()
         self.date_labels()
         self.date_buttons()
+
         self.style = ttk.Style(self)
         self.style.configure('Date.TButton', foreground='green', padding=50)
         self.style.configure('Month.TLabel', foreground='orange', underline=True)
@@ -41,7 +44,7 @@ class CalWindow(Tk):
             "December": 12
         }
 
-
+        # made a reference dictionary, wouldn't work globally for some reason. Mess with later.
         self.months = StringVar()
         self.month_box = ttk.Combobox(self.anchor_point, width=20, textvariable=self.months)
         self.month_box["values"] = list(month_dict.keys())
@@ -49,9 +52,15 @@ class CalWindow(Tk):
         self.month_box.current((self.today.month - 1))
         self.month_box.grid(column=3, row=0, pady=(0, 40))
 
+        # This is the code for the month pull down selection at the top of the calendar module.
+        # the months stringvariable alows me to the selection to use later. month_box.current sets the default value
+
         self.year_entry = Entry(self.anchor_point, width=20)
-        self.year_entry.insert(0, "2021")
+        self.year_entry.insert(0, str(self.today.year))
         self.year_entry.grid(column=2, row=0, pady=(0,40))
+
+        # This code allows the user to input a year they want to see.
+        # insert allows me to make a default input.
 
         self.date_submit = ttk.Button(self.anchor_point, command=self.date_buttons())
 
@@ -87,13 +96,21 @@ class CalWindow(Tk):
         month_selection = month_dict[self.months.get()]
         year_selection = int(self.year_entry.get())
 
+        # This creates two variables that I use to figure out the selection of month and year. Default values will be
+        # set at the current year and month.
+
         month_info = calendar.monthrange(year_selection, month_selection)
         num_days = month_info[1]
+
         if month_info[0] < 6:
             column_track = month_info[0] + 1
         if month_info[0] == 6:
             column_track = 0
+
         row_track = 2
+
+        # This bit of code creates the starting place for the following code to start populating at. IE lets the
+        # Calendar start at the right day of the week. Row track places it always beginning after the other info
 
         for day in range(1, num_days+1):
             date_as_str = str(day)
@@ -120,6 +137,8 @@ class CalWindow(Tk):
         self.create_combo()
         self.create_label()
         self.create_button()
+
+        # this is creating a new window in which a user can interact with. Just a placeholder for now.
 
     def create_combo(self):
 
