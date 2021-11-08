@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import calendar_module
 
+
 class Window(Tk):
     def __init__(self):
         super().__init__()
@@ -11,8 +12,8 @@ class Window(Tk):
 
         # This sets the title of the windows, and maps the icon used in the top left of the app
 
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
+        # screen_width = self.winfo_screenwidth()
+        # screen_height = self.winfo_screenheight()
 
         # This check the actual height and width of the display i'm using, although I end up letting the frames
         # Automatically size themselves for simplicity.
@@ -23,14 +24,13 @@ class Window(Tk):
         self.frame_var = Frame(self, background='grey')
         self.frame_var.pack(expand=True)
 
-        #This is setting a frame for everything to be anchored to. Did this instead of the master frame
-        #So that I can destroy the frame and refresh with new widgets / options rather than closing the app.
+        # This is setting a frame for everything to be anchored to. Did this instead of the master frame
+        # So that I can destroy the frame and refresh with new widgets / options rather than closing the app.
 
         self.menu_buttons(self.frame_var)
         self.create_menu()
 
-        #This calls the function I made in the class. Makes the menu, passing the anchor frame.
-
+        # This calls the function I made in the class. Makes the menu, passing the anchor frame.
 
         self.style = ttk.Style(self)
         self.style.configure('Date.TButton', foreground='green', padding=50)
@@ -96,7 +96,6 @@ class Window(Tk):
     #     asdf = testing.CalendarGui(self.frame_var)
     #     asdf.do_stuff(self.frame_var)
     #     # NOW I NEED LOGIC TO OPEN THE CALENDAR MODULE STUFF
-
 
     def create_menu(self):
 
