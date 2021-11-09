@@ -148,7 +148,7 @@ class CalWindow(Tk):
         print(day, month, year)
         self.temp_window = Toplevel(self.anchor_point)
         self.temp_window.minsize(500, 400)
-        self.temp_window.title("Info Tracking")
+        self.temp_window.title(f"{month} {day}, {year}")
         self.temp_window.name = StringVar()
         self.create_combo()
         self.create_label()
@@ -161,6 +161,12 @@ class CalWindow(Tk):
         self.entry_info = StringVar()
         self.text_entry = Entry(self.temp_window, borderwidth=10, textvariable=self.entry_info)
         self.text_entry.grid(column=3, row=3)
+
+        self.calorie_label = Label(self.temp_window, text="Input Caloric Intake Here:")
+        self.calorie_label.grid(column=3, row=2)
+
+        self.calorie_submit = Button(self.temp_window, text="Save Log", command=lambda: print("Hello"))
+        self.calorie_submit.grid(column=4, row=3)
 
     def create_combo(self):
 
