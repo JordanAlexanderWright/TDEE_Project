@@ -33,8 +33,6 @@ class CalWindow(Tk):
 
         self.create_calendar()
 
-
-
         self.style = ttk.Style(self)
         self.style.configure('Date.TButton', foreground='green', padding=50)
         self.style.configure('Month.TLabel', foreground='orange', underline=True)
@@ -132,7 +130,9 @@ class CalWindow(Tk):
 
         for day in range(1, num_days+1):
             date_as_str = str(day)
-            btn = ttk.Button(master=self.anchor_point, text=date_as_str, style='Date.TButton', command=self.date_entry)
+            btn = ttk.Button(master=self.anchor_point, text=date_as_str, style='Date.TButton',
+                             command=lambda day=day, month=self.month_selection, year=self.year_selection:
+                             self.date_entry(day, month, year))
             btn.grid(column=column_track, row=row_track)
             column_track += 1
 
@@ -140,18 +140,27 @@ class CalWindow(Tk):
                 column_track = 0
                 row_track += 2
 
-    def date_entry(self):
+        # The lambda function is black freaking magic.
+        # Reference: https://stackoverflow.com/questions/10865116/tkinter-creating-buttons-in-for-loop-passing-command-arguments
 
+    def date_entry(self, day, month, year):
+
+        print(day, month, year)
         self.temp_window = Toplevel(self.anchor_point)
         self.temp_window.minsize(500, 400)
-        self.temp_window.title("Date Window")
+        self.temp_window.title("Info Tracking")
         self.temp_window.name = StringVar()
-        # self.text_entry()
         self.create_combo()
         self.create_label()
         self.create_button()
-
+        self.create_entry()
         # this is creating a new window in which a user can interact with. Just a placeholder for now.
+
+    def create_entry(self):
+
+        self.entry_info = StringVar()
+        self.text_entry = Entry(self.temp_window, borderwidth=10, textvariable=self.entry_info)
+        self.text_entry.grid(column=3, row=3)
 
     def create_combo(self):
 
