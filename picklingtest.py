@@ -16,9 +16,9 @@ information = {
 }
 
 the_strings = (some_string, another_string)
-#
-# with open('data.pickle', 'wb') as file:
-#     pickle.dump(information, file, pickle.HIGHEST_PROTOCOL)
+
+with open('data.pickle', 'wb') as file:
+    pickle.dump(information, file, pickle.HIGHEST_PROTOCOL)
 
 
 with (open("data.pickle", "rb")) as openfile:
