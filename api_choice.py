@@ -12,10 +12,7 @@ class Window(Tk):
         self.minsize(800, 800)
         self.key = 'WsAc8bOO00nv2sgDqa7PkIYHZtz2Utq8tKJHVuKS'
         self.api_list = StringVar()
-        self.api_list.set('Placeholder1 placholder2 placeholder3')
-        self.some_list = ['sweet1', 'sweet2', 'sweet3', 'sweet4', 'sweet5']
-        self.api_list.set(self.some_list)
-        self.data_names =[]
+        self.data_names = []
 
         self.create_entry()
 
@@ -31,23 +28,29 @@ class Window(Tk):
         self.food_choices.pack()
 
         print(type(self.api_list.get()))
-        food_choice_sub = Button(self, bd=10, text='Yum!!', command=lambda: self.nutrition_info(self.food_choices.get(ANCHOR)[1]))
+        food_choice_sub = Button(self, bd=10, text='Yum!!',
+                                 command=lambda: self.nutrition_info(self.food_choices.get(ANCHOR)[1]))
         food_choice_sub.pack()
 
     def api_search(self, search_param):
 
         print(search_param)
         payload = {'api_key': self.key, 'query': search_param}
-        response = requests.get("https://api.nal.usda.gov/fdc/v1/foods/list", params=payload)
+        response = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search", params=payload)
         data = response.json()
         # keys = ['fdcId', 'description', 'dataType', 'brandOwner']
         #
-
+        #
         for item in data:
-            if len(item['description']) > len(search_param):
-                print('might not be what I am looking for')
-            else:
-                self.data_names.append((item['description'], item['fdcId']))
+            print(item)
+            self.data_names.append(data)
+        # for item in data:
+        #
+        #     # if len(item['description']) > len(search_param):
+        #     #     print('might not be what I am looking for')
+        #     #     print(item['description'])
+        #     # else:
+        #     #     self.data_names.append((item['description'], item['fdcId']))
 
         self.api_list.set(self.data_names)
 

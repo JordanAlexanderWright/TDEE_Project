@@ -11,12 +11,21 @@ my_key = 'WsAc8bOO00nv2sgDqa7PkIYHZtz2Utq8tKJHVuKS'
 payload = {'api_key': my_key}
 response = requests.get("https://api.nal.usda.gov/fdc/v1/food/2165595", params=payload)
 
-print(response.status_code)
+# print(working_with['servingSize'])
+# print(working_with['labelNutrients'])
+# print(response.status_code)
 
 
-working_with = response.json()
+payload = {'api_key': my_key, 'query': 'Chicken Strips', 'requireAllWords': True}
+response = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search", params=payload)
+data = response.json()
 
-print(working_with['servingSize'])
-print(working_with['labelNutrients'])
+print(data.keys())
 
-# food_id = 2165595
+print(data['totalHits'])
+
+print(data['foods'])
+
+
+for food in data['foods']:
+    print(food['fdcId'])
