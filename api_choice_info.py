@@ -41,3 +41,31 @@ for food in data['foods']:
     #     print(item)
     # print(food['fdcId'])
     # print(food['lowercaseDescription'])
+
+"""
+These are the keys for food items in the Json file for branded queries :
+fdcId
+description
+lowercaseDescription
+dataType
+gtinUpc
+publishedDate
+brandOwner
+brandName
+ingredients
+marketCountry
+foodCategory
+modifiedDate
+dataSource
+servingSizeUnit
+servingSize
+allHighlightFields
+score
+foodNutrients
+finalFoodInputFoods
+foodMeasures
+foodAttributes
+foodAttributeTypes
+foodVersionIds
+"""
+
