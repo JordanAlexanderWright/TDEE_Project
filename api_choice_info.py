@@ -16,16 +16,28 @@ response = requests.get("https://api.nal.usda.gov/fdc/v1/food/2165595", params=p
 # print(response.status_code)
 
 
-payload = {'api_key': my_key, 'query': 'Chicken Strips', 'requireAllWords': True}
+payload = {'api_key': my_key, 'query': 'Chicken Strips', 'requireAllWords': True, 'pageSize': 5,
+           'dataType': ['Branded']}
+
+# dataType params can be 'Branded' and / or 'Survey(FNDDS)'
+# Both Data Types have to be treated differently.
 response = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search", params=payload)
 data = response.json()
 
 print(data.keys())
 
+print(data['foodSearchCriteria'])
 print(data['totalHits'])
 
 print(data['foods'])
 
 
 for food in data['foods']:
-    print(food['fdcId'])
+    print(f"{food['servingSize']}{food['servingSizeUnit']}")
+    print(food['brandName'])
+
+    # This syntax will get the serving size and unit and return it as a string.
+    # for item in food:
+    #     print(item)
+    # print(food['fdcId'])
+    # print(food['lowercaseDescription'])

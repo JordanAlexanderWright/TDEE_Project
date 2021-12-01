@@ -30,27 +30,22 @@ class Window(Tk):
         print(type(self.api_list.get()))
         food_choice_sub = Button(self, bd=10, text='Yum!!',
                                  command=lambda: self.nutrition_info(self.food_choices.get(ANCHOR)[1]))
+
+        # The nutrition_info function needs work!
         food_choice_sub.pack()
 
     def api_search(self, search_param):
 
         print(search_param)
-        payload = {'api_key': self.key, 'query': search_param}
+        payload = {'api_key': self.key, 'query': search_param, 'requireAllWords': True, 'pageSize': 5,
+                   'dataType': ['Branded']}
         response = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search", params=payload)
         data = response.json()
-        # keys = ['fdcId', 'description', 'dataType', 'brandOwner']
-        #
-        #
-        for item in data:
-            print(item)
-            self.data_names.append(data)
-        # for item in data:
-        #
-        #     # if len(item['description']) > len(search_param):
-        #     #     print('might not be what I am looking for')
-        #     #     print(item['description'])
-        #     # else:
-        #     #     self.data_names.append((item['description'], item['fdcId']))
+
+        for food in data['foods']:
+            print(food)
+            print(food['lowercaseDescription'])
+            self.data_names.append(f"{food['lowercaseDescription'].title()}: {food['brandOwner']}")
 
         self.api_list.set(self.data_names)
 
@@ -59,6 +54,8 @@ class Window(Tk):
         payload = {'api_key': self.key}
         response = requests.get(f"https://api.nal.usda.gov/fdc/v1/food/{fcdid}", params=payload)
         data = response.json()
+
+        # This Function needs work, the payload params probably don't apply here
 
         for item in data:
             print(item)
