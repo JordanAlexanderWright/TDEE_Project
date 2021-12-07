@@ -2,9 +2,11 @@ from tkinter import *
 from tkinter import ttk
 import calendar
 from datetime import date
+import api_choice
 
-class CalWindow(Tk):
+class CalWindow(Toplevel):
 
+    # I need to  use Toplevel for any new windows. Can only have one Tk window.
     # I believe that when I am importing this it is still making another master frame. Need to work on that.
 
     def __init__(self, frame=NONE):
@@ -102,6 +104,7 @@ class CalWindow(Tk):
 
         self.month_selection = self.month_box.get()
         self.year_selection = self.year_entry.get()
+        self.day_selection = StringVar
 
 
         # This creates two variables that I use to figure out the selection of month and year. Default values will be
@@ -111,6 +114,7 @@ class CalWindow(Tk):
 
         month_var = self.month_dict[self.month_box.get()]
         year_var = int(self.year_entry.get())
+
 
         # This creates two variables that I use to figure out the selection of month and year. Default values will be
         # set at the current year and month.
@@ -130,9 +134,16 @@ class CalWindow(Tk):
 
         for day in range(1, num_days+1):
             date_as_str = str(day)
+            print(date_as_str)
+
+            # btn = ttk.Button(master=self.anchor_point, text=date_as_str, style='Date.TButton',
+            #                  command=lambda day=day, month=self.month_selection, year=self.year_selection:
+            #                  self.date_entry(day, month, year))
+
             btn = ttk.Button(master=self.anchor_point, text=date_as_str, style='Date.TButton',
                              command=lambda day=day, month=self.month_selection, year=self.year_selection:
-                             self.date_entry(day, month, year))
+                             api_choice.FoodSearch(day, month, year))
+
             btn.grid(column=column_track, row=row_track)
             column_track += 1
 
@@ -140,6 +151,7 @@ class CalWindow(Tk):
                 column_track = 0
                 row_track += 2
 
+        # btn 1, old code, btn 2, new code. Old code links to this module, other to api_choice
         # The lambda function is black freaking magic.
         # Reference: https://stackoverflow.com/questions/10865116/tkinter-creating-buttons-in-for-loop-passing-command-arguments
 
@@ -154,6 +166,7 @@ class CalWindow(Tk):
         self.create_label()
         self.create_button()
         self.create_entry()
+
         # this is creating a new window in which a user can interact with. Just a placeholder for now.
 
     def create_entry(self):

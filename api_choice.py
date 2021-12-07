@@ -1,33 +1,45 @@
 import requests
 from tkinter import *
 from tkinter import ttk
+from datetime import date
 
 
-class Window(Tk):
+class FoodSearch(Toplevel):
 
-    def __init__(self):
+    def __init__(self, day=None, month=None, year=None, frame=None,):
         super().__init__()
 
-        self.title('Food Selection')
+        print(day, month, year)
+        self.date_today = date.today()
+
+        self.month_list = ("January", "February", "March", "April", "May", "June", "July", "August",
+                      "September", "October", "November", "December")
+
+        if day and month and year == True:
+            self.title(f"{month}-{day}, {year}")
+        else:
+            self.title(f"{self.month_list[self.date_today.month-1]} {self.date_today.day}, {self.date_today.year}")
+
         self.minsize(800, 800)
         self.key = 'WsAc8bOO00nv2sgDqa7PkIYHZtz2Utq8tKJHVuKS'
         self.api_list = StringVar()
         self.data_names = []
+        self.food_var = StringVar()
 
         self.create_entry()
 
     def create_entry(self):
-        food_var = StringVar()
-        food_search = Entry(self, bd=10, textvariable=food_var, width=40)
+
+        food_search = Entry(self, bd=10, textvariable=self.food_var, width=40)
         food_search.pack()
 
-        food_submit = Button(self, bd=10, text='Search', command=lambda: self.api_search(food_var.get()))
+        food_submit = Button(self, bd=10, text='Search', command=lambda: self.api_search(self.food_var.get()))
         food_submit.pack()
 
         self.food_choices = Listbox(self, height=10, listvariable=self.api_list)
         self.food_choices.pack()
 
-        print(type(self.api_list.get()))
+
         food_choice_sub = Button(self, bd=10, text='Yum!!',
                                  command=lambda: self.nutrition_info(self.food_choices.get(ANCHOR)[1]))
 
@@ -48,6 +60,9 @@ class Window(Tk):
             self.data_names.append(f"{food['lowercaseDescription'].title()}: {food['brandOwner']}")
 
         self.api_list.set(self.data_names)
+        for item in self.data_names:
+            print(item)
+        print("Hello")
 
     def nutrition_info(self, fcdid):
 
@@ -107,6 +122,6 @@ class Window(Tk):
 
 
 if __name__ == "__main__":
-    window = Window()
+    window = FoodSearch()
     window.mainloop()
 

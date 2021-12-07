@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import calendar_module
-
+import api_choice
 
 class Window(Tk):
     def __init__(self):
@@ -64,7 +64,7 @@ class Window(Tk):
 
     def menu_buttons(self, frame):
 
-        self.current_week = ttk.Button(frame, text='Current Week', command=None, style='Menu.TButton')
+        self.current_week = ttk.Button(frame, text='Current Week', command=lambda: self.goto_fill(frame), style='Menu.TButton')
         self.current_week.grid(column=1, row=1, padx=30, pady=30)
 
         self.current_month = ttk.Button(frame, text='Current Month', command=lambda: self.goto_calendar(frame),
@@ -83,6 +83,12 @@ class Window(Tk):
 
         # I set the weight here because it will allow my widgets to fill the space. Also, this will cause all widgets
         # to be centered in the event the application is resized.
+
+    def goto_fill(self, frame):
+        frame.destroy()
+        self.frame_var = Frame(self,background='grey')
+        self.frame_var.pack(expand=True)
+        trying = api_choice.FoodSearch(self.frame_var)
 
     def goto_calendar(self, frame):
         frame.destroy()
