@@ -13,7 +13,7 @@ class FoodSearch(Toplevel):
         self.date_today = date.today()
 
         self.month_list = ("January", "February", "March", "April", "May", "June", "July", "August",
-                      "September", "October", "November", "December")
+                           "September", "October", "November", "December")
 
         if day and month and year == True:
             self.title(f"{month}-{day}, {year}")

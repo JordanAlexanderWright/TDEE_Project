@@ -7,7 +7,6 @@ import api_choice
 class CalWindow(Toplevel):
 
     # I need to  use Toplevel for any new windows. Can only have one Tk window.
-    # I believe that when I am importing this it is still making another master frame. Need to work on that.
 
     def __init__(self, frame=NONE):
         super().__init__()
