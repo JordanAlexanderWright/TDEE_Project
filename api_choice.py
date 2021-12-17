@@ -10,6 +10,7 @@ class FoodSearch(Toplevel):
         super().__init__()
 
         print(day, month, year)
+
         self.date_today = date.today()
 
         self.month_list = ("January", "February", "March", "April", "May", "June", "July", "August",
@@ -125,9 +126,9 @@ class FoodSearch(Toplevel):
 
         text_format = self.temp_dict[self.date_formatted]
 
-        for item in self.temp_dict[self.date_formatted]:
-            text_format = item
-        info_text = info_display.create_text()
+        # for item in self.temp_dict[self.date_formatted]:
+        #     text_format = item
+        # info_text = info_display.create_text()
 
     def tempsave(self):
 
@@ -137,18 +138,12 @@ class FoodSearch(Toplevel):
 
         self.temp_dict[self.date_formatted].update(format_data)
 
+        print(format_data)
 
         # information = {
         #     '12/1/2021': {'Steak': {'Protein': 30, 'Calories': 500},
         #                   'Chicken': {'Protein': 30, 'Calories': 300}},
         # }
-
-
-
-
-
-
-
 
 
 

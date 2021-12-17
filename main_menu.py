@@ -92,6 +92,7 @@ class Window(Tk):
 
     def goto_calendar(self, frame):
         frame.destroy()
+        self.withdraw()
         self.frame_var = Frame(self, background='grey')
         self.frame_var.pack(expand=True)
         stuff = calendar_module.CalWindow(self.frame_var)
