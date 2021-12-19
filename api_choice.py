@@ -11,6 +11,7 @@ class FoodSearch(Toplevel):
 
         print(day, month, year)
 
+
         self.date_today = date.today()
 
         self.month_list = ("January", "February", "March", "April", "May", "June", "July", "August",
@@ -124,6 +125,12 @@ class FoodSearch(Toplevel):
         info_display = Canvas(self, bd=10, background='white')
         info_display.grid(row=5, column=0)
 
+        self.info_label = StringVar()
+        self.info_label.set("test")
+
+        self.day_label = Label(info_display, bd=10, textvariable=self.info_label)
+        self.day_label.grid(row=0, column=0)
+
         text_format = self.temp_dict[self.date_formatted]
 
         # for item in self.temp_dict[self.date_formatted]:
@@ -137,8 +144,8 @@ class FoodSearch(Toplevel):
         }
 
         self.temp_dict[self.date_formatted].update(format_data)
-
-        print(format_data)
+        self.info_label.set(self.temp_dict[self.date_formatted])
+        self.day_label.update()
 
         # information = {
         #     '12/1/2021': {'Steak': {'Protein': 30, 'Calories': 500},
