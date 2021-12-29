@@ -9,33 +9,41 @@ class FoodSearch(Toplevel):
     def __init__(self, day=None, month=None, year=None, frame=None,):
         super().__init__()
 
-        print(day, month, year)
+        # initial Window set up, and creation of a couple of variables for later.
 
+        self.minsize(800, 800)
+
+        self.key = 'WsAc8bOO00nv2sgDqa7PkIYHZtz2Utq8tKJHVuKS'
+        self.data_names = []
+
+        # This will create the date for the selected calendar button, and sets up a formatted date used later
 
         self.date_today = date.today()
 
         self.month_list = ("January", "February", "March", "April", "May", "June", "July", "August",
                            "September", "October", "November", "December")
 
-        if day and month and year == True:
-            self.title(f"{month}-{day}, {year}")
+        if day and month and year:
+            self.title(f"{month} {day}, {year}")
         else:
-            self.title(f"{self.month_list[self.date_today.month-1]} {self.date_today.day}, {self.date_today.year}")
+            self.title(f"{self.month_list[self.date_today.month - 1]} {self.date_today.day}, {self.date_today.year}")
 
         self.date_formatted = f"{self.date_today.month}/{self.date_today.day}/{self.date_today.year}"
-        print(self.date_formatted)
-        self.minsize(800, 800)
-        self.key = 'WsAc8bOO00nv2sgDqa7PkIYHZtz2Utq8tKJHVuKS'
+
+        # Creating all the string variables I will need in the later functions.
+
         self.api_list = StringVar()
-        self.data_names = []
         self.food_var = StringVar()
         self.name_var = StringVar()
         self.protein_var = StringVar()
         self.calorie_var = StringVar()
+        self.info_label = StringVar()
 
         self.temp_dict = {
             self.date_formatted: {}
         }
+
+        # Running all the functions needed to set up the data entry window
 
         self.create_entry()
         self.custom_input()
@@ -49,14 +57,11 @@ class FoodSearch(Toplevel):
         food_submit = Button(self, bd=10, text='Search', command=lambda: self.api_search(self.food_var.get()))
         food_submit.grid(row=0, column=1)
 
-        self.food_choices = Listbox(self, height=10, listvariable=self.api_list, width=40)
-        self.food_choices.grid(row=1, column=0)
-
+        food_choices = Listbox(self, height=10, listvariable=self.api_list, width=40)
+        food_choices.grid(row=1, column=0)
 
         food_choice_sub = Button(self, bd=10, text='Yum!!',
-                                 command=lambda: self.nutrition_info(self.food_choices.get(ANCHOR)[1]))
-
-        # The nutrition_info function needs work!
+                                 command=lambda: self.nutrition_info(food_choices.get(ANCHOR)[1]))
         food_choice_sub.grid(row=2, column=0)
 
     def api_search(self, search_param):
@@ -92,6 +97,7 @@ class FoodSearch(Toplevel):
             print(data['servingSize'])
         except:
             pass
+
         try:
             print(data['labelNutrients'])
         except:
@@ -125,19 +131,12 @@ class FoodSearch(Toplevel):
         info_display = Canvas(self, bd=10, background='white')
         info_display.grid(row=5, column=0)
 
-        self.info_label = StringVar()
-        self.info_label.set("test")
-
         self.day_label = Label(info_display, bd=10, textvariable=self.info_label)
         self.day_label.grid(row=0, column=0)
 
-        text_format = self.temp_dict[self.date_formatted]
-
-        # for item in self.temp_dict[self.date_formatted]:
-        #     text_format = item
-        # info_text = info_display.create_text()
-
     def tempsave(self):
+
+        # This formats the user input information and saves it into the temporary dictionary for the page.
 
         format_data = {
             self.name_var.get(): {"Protein": self.protein_var.get(), "Calories": self.calorie_var.get()}
@@ -151,33 +150,6 @@ class FoodSearch(Toplevel):
         #     '12/1/2021': {'Steak': {'Protein': 30, 'Calories': 500},
         #                   'Chicken': {'Protein': 30, 'Calories': 300}},
         # }
-
-
-
-#
-# print("Please Input a food you'd like to lookup")
-# food = input()
-# my_key = 'WsAc8bOO00nv2sgDqa7PkIYHZtz2Utq8tKJHVuKS'
-# query_type = 'list'
-# payload = {'api_key': my_key, 'query': food}
-# response = requests.get("https://api.nal.usda.gov/fdc/v1/foods/list", params=payload)
-#
-# print(response.status_code)
-#
-# information = response.json()
-
-# response.json() here creates a list of dictionaries.
-#
-# keys = ['fdcId', 'description', 'dataType', 'brandOwner']
-# for item in information:
-#     for key in keys:
-#         try:
-#             print(item[key])
-#         except KeyError:
-#             print(f"There may be an error with this key:{key}")
-#
-#
-#
 
 
 if __name__ == "__main__":

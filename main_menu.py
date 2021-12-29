@@ -92,18 +92,15 @@ class Window(Tk):
         trying = api_choice.FoodSearch(self.frame_var)
 
     def goto_calendar(self, frame):
+
+        # This will destroy the frame that whatever widgets i'm moving away from are anchored to.
+        # this is importing from the calendar gui file, which handles all of the calendar interface.
+
         frame.destroy()
         self.withdraw()
         self.frame_var = Frame(self, background='grey')
         self.frame_var.pack(expand=True)
         stuff = calendar_module.CalWindow(self.frame_var)
-
-        # This will destroy the frame that whatever widgets i'm moving away from are anchored to.
-        # this is importing from the calendar gui file, which handles all of the calendar interface.
-
-    #     asdf = testing.CalendarGui(self.frame_var)
-    #     asdf.do_stuff(self.frame_var)
-    #     # NOW I NEED LOGIC TO OPEN THE CALENDAR MODULE STUFF
 
     def create_menu(self):
 
@@ -122,7 +119,7 @@ class Window(Tk):
         self.help_menu.add_command(labe="About")
 
         # All of this code creates a very basic menu (top left of the application)
-        # This menu has little to no functionality, but needs to be expanded up.
+        # This menu has little to no functionality, but needs to be expanded on
 
     def close_menu(self):
         self.quit()
