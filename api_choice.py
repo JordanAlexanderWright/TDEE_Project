@@ -2,6 +2,7 @@ import requests
 from tkinter import *
 from tkinter import ttk
 from datetime import date
+import data_handling
 
 
 class FoodSearch(Toplevel):
@@ -18,17 +19,19 @@ class FoodSearch(Toplevel):
 
         # This will create the date for the selected calendar button, and sets up a formatted date used later
 
-        self.date_today = date.today()
 
         self.month_list = ("January", "February", "March", "April", "May", "June", "July", "August",
                            "September", "October", "November", "December")
 
+        self.date_today = date.today()
+
         if day and month and year:
-            self.title(f"{month} {day}, {year}")
+            self.date_formatted = f"{month} {day}, {year}"
+            self.title(self.date_formatted)
+
         else:
             self.title(f"{self.month_list[self.date_today.month - 1]} {self.date_today.day}, {self.date_today.year}")
-
-        self.date_formatted = f"{self.date_today.month}/{self.date_today.day}/{self.date_today.year}"
+            self.date_formatted = f"{self.date_today.month}/{self.date_today.day}/{self.date_today.year}"
 
         # Creating all the string variables I will need in the later functions.
 
@@ -123,8 +126,18 @@ class FoodSearch(Toplevel):
         calorie_label = Label(self, text="Calories")
         calorie_label.grid(row=3, column=2)
 
-        save_button = Button(self, text="Save", command=lambda: self.tempsave())
-        save_button.grid(row=4, column=3)
+        update_button = Button(self, text="Update", command=lambda: self.tempsave())
+        update_button.grid(row=4, column=3)
+
+        save_button = Button(self, text="Save", command=lambda: self.save_things())
+        save_button.grid(row=6, column=3)
+
+        try:
+            saved_data = data_handling.load_info(self.date_formatted)
+            print(saved_data)
+            self.info_label.set(saved_data)
+        except:
+            print("hmmm")
 
     def day_info(self):
 
@@ -138,18 +151,23 @@ class FoodSearch(Toplevel):
 
         # This formats the user input information and saves it into the temporary dictionary for the page.
 
-        format_data = {
+        self.format_data = {
             self.name_var.get(): {"Protein": self.protein_var.get(), "Calories": self.calorie_var.get()}
         }
 
-        self.temp_dict[self.date_formatted].update(format_data)
+        self.temp_dict[self.date_formatted].update(self.format_data)
         self.info_label.set(self.temp_dict[self.date_formatted])
         self.day_label.update()
+
 
         # information = {
         #     '12/1/2021': {'Steak': {'Protein': 30, 'Calories': 500},
         #                   'Chicken': {'Protein': 30, 'Calories': 300}},
         # }
+
+    def save_things(self):
+
+        data_handling.save_food(self.date_formatted, self.temp_dict[self.date_formatted])
 
 
 if __name__ == "__main__":
