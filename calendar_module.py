@@ -109,7 +109,7 @@ class CalWindow(Toplevel):
 
         self.month_selection = self.month_box.get()
         self.year_selection = self.year_entry.get()
-        self.day_selection = StringVar
+        self.day_selection = StringVar()
 
     def date_buttons(self):
 
